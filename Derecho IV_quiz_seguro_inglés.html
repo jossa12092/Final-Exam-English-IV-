@@ -1,0 +1,1177 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Plataforma Segura - Relative Clauses, Infinitive/Gerund, Scanning</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    :root {
+      --bg: #eef1f7;
+      --card-bg: #ffffff;
+      --primary: #3b82f6;
+      --primary-soft: #bfdbfe;
+      --danger: #ef4444;
+      --text: #111827;
+      --muted: #6b7280;
+      --border: #e5e7eb;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #dbeafe, #e5e7eb);
+      color: var(--text);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      user-select: none;           /* Bloqueo selección de texto */
+      -webkit-user-select: none;
+      -ms-user-select: none;
+    }
+
+    #app {
+      width: 100%;
+      max-width: 900px;
+      padding: 16px;
+    }
+
+    .card {
+      background: var(--card-bg);
+      border-radius: 16px;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.12);
+      padding: 24px 20px;
+      max-height: calc(100vh - 32px);
+      overflow-y: auto;
+      border: 1px solid var(--border);
+    }
+
+    h1, h2, h3 {
+      margin-top: 0;
+      color: #0f172a;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 10px 18px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      font-size: 15px;
+      font-weight: 600;
+      transition: transform 0.08s ease, box-shadow 0.08s ease, background 0.15s ease;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: #ffffff;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.35);
+    }
+
+    .btn-primary:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      box-shadow: none;
+      transform: none;
+    }
+
+    .btn-primary:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 22px rgba(37, 99, 235, 0.4);
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .btn-secondary:hover {
+      background: #d1d5db;
+    }
+
+    .start-description {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.5;
+      margin-bottom: 16px;
+    }
+
+    .security-note {
+      font-size: 13px;
+      color: var(--muted);
+      background: #eff6ff;
+      border-radius: 12px;
+      padding: 10px 12px;
+      border: 1px dashed #bfdbfe;
+      margin-bottom: 16px;
+    }
+
+    .security-message {
+      font-size: 13px;
+      color: var(--danger);
+      margin-top: 8px;
+      margin-bottom: 4px;
+    }
+
+    .top-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .progress-container {
+      flex: 1 1 180px;
+      background: #e5e7eb;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 22px;
+      position: relative;
+    }
+
+    .progress-bar {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #22c55e, #f97316);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: width 0.2s ease;
+      font-size: 11px;
+      font-weight: 600;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    .scoreboard {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 12px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .scoreboard span strong {
+      font-weight: 700;
+      color: #111827;
+    }
+
+    .question-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px 10px;
+      align-items: baseline;
+      margin-bottom: 8px;
+      font-size: 13px;
+    }
+
+    .question-number {
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .question-topic {
+      color: var(--muted);
+    }
+
+    .passage {
+      padding: 10px 12px;
+      border-radius: 12px;
+      background: #f3f4f6;
+      border: 1px solid #e5e7eb;
+      font-size: 13px;
+      line-height: 1.5;
+      margin-bottom: 12px;
+    }
+
+    .passage p {
+      margin: 4px 0;
+    }
+
+    .question-text {
+      font-size: 15px;
+      margin-bottom: 10px;
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    .option-btn {
+      width: 100%;
+      text-align: left;
+      padding: 10px 12px;
+      font-size: 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #f9fafb;
+      cursor: pointer;
+      transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
+    }
+
+    .option-btn:hover {
+      background: #eff6ff;
+      border-color: var(--primary-soft);
+      transform: translateY(-1px);
+    }
+
+    .option-btn.selected.correct {
+      background: #dcfce7;
+      border-color: #22c55e;
+    }
+
+    .option-btn.selected.incorrect {
+      background: #fee2e2;
+      border-color: #ef4444;
+    }
+
+    .feedback {
+      min-height: 20px;
+      font-size: 14px;
+      font-weight: 600;
+      margin-bottom: 12px;
+    }
+
+    .feedback.correct {
+      color: #16a34a;
+    }
+
+    .feedback.incorrect {
+      color: #dc2626;
+    }
+
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 8px;
+    }
+
+    .result-summary {
+      font-size: 15px;
+      line-height: 1.6;
+      margin-bottom: 16px;
+    }
+
+    .result-summary strong {
+      color: #0f172a;
+    }
+
+    .result-badge {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: #eff6ff;
+      color: #1d4ed8;
+      font-weight: 700;
+      margin-bottom: 10px;
+      font-size: 14px;
+    }
+
+    .result-detail {
+      font-size: 14px;
+      color: var(--muted);
+      margin-bottom: 4px;
+    }
+
+    @media (max-width: 640px) {
+      .card {
+        padding: 18px 14px;
+      }
+      .top-bar {
+        flex-direction: column;
+        align-items: stretch;
+      }
+      .scoreboard {
+        justify-content: space-between;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- Pantalla de inicio -->
+    <div id="start-screen" class="card">
+      <h1>Evaluación Segura de Inglés</h1>
+      <p class="start-description">
+        Temas: <strong>Relative clauses (when, where, who, whose)</strong>, 
+        <strong>Infinitive &amp; Gerund</strong> y 
+        <strong>Scanning de textos</strong>. <br />
+        Cada intento toma <strong>15 preguntas aleatorias</strong> del banco de 50.
+      </p>
+      <div class="security-note">
+        Esta plataforma aplica múltiples bloqueos: desactiva copiar/pegar, clic derecho,
+        intenta detectar cambios de pestaña, minimizar ventana, uso de teclas como PrintScreen
+        y atajos de herramientas de desarrollador, y reinicia la evaluación si se detecta
+        una posible acción externa. <br />
+        <strong>Importante:</strong> por las limitaciones propias del navegador, ningún sistema web
+        puede bloquear al 100% todas las capturas de pantalla o programas externos, 
+        pero aquí se implementan muchas de las defensas posibles en el lado del navegador.
+      </div>
+      <div id="security-message" class="security-message"></div>
+      <button id="start-btn" class="btn btn-primary">Iniciar evaluación</button>
+    </div>
+
+    <!-- Pantalla de quiz -->
+    <div id="quiz-screen" class="card hidden">
+      <h2>Responde sin cambiar de pestaña ni minimizar</h2>
+      <div class="top-bar">
+        <div class="progress-container">
+          <div id="progress-bar" class="progress-bar">
+            <span id="progress-label"></span>
+          </div>
+        </div>
+        <div class="scoreboard">
+          <span>✔️ Correctas: <strong id="correct-count">0</strong></span>
+          <span>❌ Incorrectas: <strong id="incorrect-count">0</strong></span>
+          <span>Preguntas: <strong id="question-counter">0 / 0</strong></span>
+        </div>
+      </div>
+
+      <div class="question-meta">
+        <span id="question-number" class="question-number"></span>
+        <span id="question-topic" class="question-topic"></span>
+      </div>
+
+      <div id="passage" class="passage hidden"></div>
+
+      <div id="question-text" class="question-text"></div>
+      <div id="options-container" class="options"></div>
+
+      <div id="feedback" class="feedback"></div>
+
+      <div class="actions">
+        <button id="next-btn" class="btn btn-primary" disabled>Siguiente pregunta</button>
+      </div>
+    </div>
+
+    <!-- Pantalla de resultados -->
+    <div id="result-screen" class="card hidden">
+      <h2>Resultado de la evaluación</h2>
+      <div class="result-summary">
+        <div class="result-badge">
+          Nota final: <span id="final-score">0.0</span> / 5.0
+        </div>
+        <div class="result-detail">
+          Preguntas respondidas: <strong id="final-total">0</strong>
+        </div>
+        <div class="result-detail">
+          ✔️ Correctas: <strong id="final-correct">0</strong> &nbsp;&nbsp;|&nbsp;&nbsp;
+          ❌ Incorrectas: <strong id="final-incorrect">0</strong>
+        </div>
+        <p>
+          Recuerda que cada nuevo intento utiliza <strong>otro conjunto aleatorio</strong> de 15 preguntas
+          del banco completo. Mantén la ventana activa, evita cambiar de pestaña, no minimices
+          y no intentes copiar ni hacer capturas desde el teclado.
+        </p>
+      </div>
+
+      <div class="actions">
+        <button id="restart-btn" class="btn btn-secondary">Volver al inicio</button>
+        <button id="retry-btn" class="btn btn-primary">Nuevo intento</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ---------------------------------------------------------
+    // Banco de textos para SCANNING
+    // ---------------------------------------------------------
+    const passages = {
+      festival: `City Music Festival
+The City Music Festival takes place every year in July in Green Park.
+This year, the festival will be on Saturday, 13 July, from 10:00 a.m. to 10:00 p.m.
+There will be three stages with live bands, a special area for children, and more than twenty food trucks.
+
+Tickets are free for children under 12 and cost 10 dollars for adults.
+People can buy tickets online or at the park entrance.
+The organizers recommend coming by bus, because parking near the park is very limited.`,
+
+      school: `Sunrise Language School
+Sunrise Language School offers English courses for adults.
+There are morning and evening classes from Monday to Friday.
+Morning classes start at 7:30 a.m. and finish at 9:00 a.m.
+Evening classes start at 6:00 p.m. and finish at 7:30 p.m.
+
+Each course lasts eight weeks, and students have a small test every Friday.
+At the end of the course, they receive a certificate if they attend at least 80% of the classes.
+Students can register online or at the school office from 9:00 a.m. to 5:00 p.m.`,
+
+      email: `Email from a friend
+Hi Alex,
+
+I’m happy to tell you that I will visit your city next month.
+I will arrive on Thursday, 5 March, at 3:15 p.m. by train.
+My hotel is called Central Star Hotel, and it is on River Street, near the old bridge.
+
+On Friday morning, I have a work meeting, but in the afternoon I’m free.
+I would love to meet you for coffee around 4:00 p.m. in the café next to your school.
+Please tell me if this is okay for you.
+
+See you soon,
+Emma`
+    };
+
+    // ---------------------------------------------------------
+    // Banco de preguntas (50)
+    // ---------------------------------------------------------
+    const questionBank = [
+      // A. Relative Clauses (1–20)
+      {
+        id: 1,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "That’s the girl ___ helped me with my homework.",
+        options: ["what", "when", "who", "where"],
+        correct: "who",
+        passageId: null
+      },
+      {
+        id: 2,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "Yesterday was the day ___ we had our English test.",
+        options: ["when", "who", "where", "whose"],
+        correct: "when",
+        passageId: null
+      },
+      {
+        id: 3,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "This is the boy ___ brother plays football with me.",
+        options: ["when", "where", "who", "whose"],
+        correct: "whose",
+        passageId: null
+      },
+      {
+        id: 4,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "That is the café ___ we usually meet after class.",
+        options: ["who", "where", "when", "whose"],
+        correct: "where",
+        passageId: null
+      },
+      {
+        id: 5,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "Summer is the time ___ many people go to the beach.",
+        options: ["who", "whose", "when", "where"],
+        correct: "when",
+        passageId: null
+      },
+      {
+        id: 6,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "She is the teacher ___ explains grammar very clearly.",
+        options: ["who", "when", "where", "whose"],
+        correct: "who",
+        passageId: null
+      },
+      {
+        id: 7,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "I have a friend ___ parents live in Canada.",
+        options: ["when", "where", "who", "whose"],
+        correct: "whose",
+        passageId: null
+      },
+      {
+        id: 8,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "A library is a place ___ you can read and study quietly.",
+        options: ["who", "where", "when", "whose"],
+        correct: "where",
+        passageId: null
+      },
+      {
+        id: 9,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "Do you remember the year ___ we first met?",
+        options: ["who", "whose", "when", "where"],
+        correct: "when",
+        passageId: null
+      },
+      {
+        id: 10,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "That’s the singer ___ song is number one on the radio now.",
+        options: ["whose", "where", "when", "who"],
+        correct: "whose",
+        passageId: null
+      },
+      {
+        id: 11,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "My neighbor is a man ___ works at the hospital.",
+        options: ["when", "where", "whose", "who"],
+        correct: "who",
+        passageId: null
+      },
+      {
+        id: 12,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "This is the park ___ we play football every Sunday.",
+        options: ["who", "where", "whose", "when"],
+        correct: "where",
+        passageId: null
+      },
+      {
+        id: 13,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "Friday is the day ___ we usually have a quiz.",
+        options: ["whose", "where", "when", "who"],
+        correct: "when",
+        passageId: null
+      },
+      {
+        id: 14,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "That’s the student ___ phone is always ringing in class.",
+        options: ["whose", "when", "where", "who"],
+        correct: "whose",
+        passageId: null
+      },
+      {
+        id: 15,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "I know a place ___ you can buy very good second-hand books.",
+        options: ["whose", "when", "who", "where"],
+        correct: "where",
+        passageId: null
+      },
+      {
+        id: 16,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "Do you know the woman ___ lives next to the supermarket?",
+        options: ["where", "who", "whose", "when"],
+        correct: "who",
+        passageId: null
+      },
+      {
+        id: 17,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "Last night was the night ___ we watched a scary movie together.",
+        options: ["where", "whose", "when", "who"],
+        correct: "when",
+        passageId: null
+      },
+      {
+        id: 18,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "That is the boy ___ won the school writing competition.",
+        options: ["who", "when", "where", "whose"],
+        correct: "who",
+        passageId: null
+      },
+      {
+        id: 19,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "I like teachers ___ classes are fun and interesting.",
+        options: ["when", "where", "who", "whose"],
+        correct: "whose",
+        passageId: null
+      },
+      {
+        id: 20,
+        topic: "Relative Clauses (when/where/who/whose)",
+        text: "This is the restaurant ___ they serve very tasty pasta.",
+        options: ["who", "whose", "when", "where"],
+        correct: "where",
+        passageId: null
+      },
+
+      // B. Infinitive & Gerund (21–35)
+      {
+        id: 21,
+        topic: "Infinitive & Gerund",
+        text: "I enjoy ___ music while I study.",
+        options: ["to listen", "to listened", "listening", "listen"],
+        correct: "listening",
+        passageId: null
+      },
+      {
+        id: 22,
+        topic: "Infinitive & Gerund",
+        text: "She wants ___ English in another country next year.",
+        options: ["to study", "studying", "study", "to studying"],
+        correct: "to study",
+        passageId: null
+      },
+      {
+        id: 23,
+        topic: "Infinitive & Gerund",
+        text: "They decided ___ the exam next Monday.",
+        options: ["taking", "take", "to taking", "to take"],
+        correct: "to take",
+        passageId: null
+      },
+      {
+        id: 24,
+        topic: "Infinitive & Gerund",
+        text: "He hates ___ in long lines at the bank.",
+        options: ["to waited", "waiting", "to waiting", "waited"],
+        correct: "waiting",
+        passageId: null
+      },
+      {
+        id: 25,
+        topic: "Infinitive & Gerund",
+        text: "We plan ___ a short trip this weekend.",
+        options: ["going", "go", "to go", "to going"],
+        correct: "to go",
+        passageId: null
+      },
+      {
+        id: 26,
+        topic: "Infinitive & Gerund",
+        text: "My sister is good at ___ cakes and cookies.",
+        options: ["making", "to make", "make", "to making"],
+        correct: "making",
+        passageId: null
+      },
+      {
+        id: 27,
+        topic: "Infinitive & Gerund",
+        text: "They hope ___ a new job soon.",
+        options: ["finding", "find", "to finding", "to find"],
+        correct: "to find",
+        passageId: null
+      },
+      {
+        id: 28,
+        topic: "Infinitive & Gerund",
+        text: "I don’t mind ___ the dishes after dinner.",
+        options: ["to wash", "washing", "to washing", "washed"],
+        correct: "washing",
+        passageId: null
+      },
+      {
+        id: 29,
+        topic: "Infinitive & Gerund",
+        text: "He forgot ___ his homework at home.",
+        options: ["bring", "bringing", "to bring", "to bringing"],
+        correct: "to bring",
+        passageId: null
+      },
+      {
+        id: 30,
+        topic: "Infinitive & Gerund",
+        text: "She would like ___ a bike for her birthday.",
+        options: ["to get", "getting", "get", "to getting"],
+        correct: "to get",
+        passageId: null
+      },
+      {
+        id: 31,
+        topic: "Infinitive & Gerund",
+        text: "I finished ___ the project last night.",
+        options: ["to do", "do", "to doing", "doing"],
+        correct: "doing",
+        passageId: null
+      },
+      {
+        id: 32,
+        topic: "Infinitive & Gerund",
+        text: "They started ___ when they heard the funny story.",
+        options: ["to laugh", "laughing", "laughed", "to laughing"],
+        correct: "laughing",
+        passageId: null
+      },
+      {
+        id: 33,
+        topic: "Infinitive & Gerund",
+        text: "It’s important ___ every day.",
+        options: ["to study", "study", "studying", "to studying"],
+        correct: "to study",
+        passageId: null
+      },
+      {
+        id: 34,
+        topic: "Infinitive & Gerund",
+        text: "He is afraid of ___ alone in the dark.",
+        options: ["being", "to be", "be", "to being"],
+        correct: "being",
+        passageId: null
+      },
+      {
+        id: 35,
+        topic: "Infinitive & Gerund",
+        text: "She promised ___ me with my homework this afternoon.",
+        options: ["helping", "help", "to helping", "to help"],
+        correct: "to help",
+        passageId: null
+      },
+
+      // C. Scanning Text – Texto 1 (36–40)
+      {
+        id: 36,
+        topic: "Scanning – Text 1: City Music Festival",
+        text: "In which month is the City Music Festival?",
+        options: ["June", "July", "August", "May"],
+        correct: "July",
+        passageId: "festival"
+      },
+      {
+        id: 37,
+        topic: "Scanning – Text 1: City Music Festival",
+        text: "What time does the festival finish?",
+        options: ["8:00 p.m.", "9:00 p.m.", "10:00 a.m.", "10:00 p.m."],
+        correct: "10:00 p.m.",
+        passageId: "festival"
+      },
+      {
+        id: 38,
+        topic: "Scanning – Text 1: City Music Festival",
+        text: "How much does a ticket for an adult cost?",
+        options: ["10 dollars", "12 dollars", "20 dollars", "It is free"],
+        correct: "10 dollars",
+        passageId: "festival"
+      },
+      {
+        id: 39,
+        topic: "Scanning – Text 1: City Music Festival",
+        text: "Where does the festival take place?",
+        options: ["In the city stadium", "In the shopping mall", "In Green Park", "At the school"],
+        correct: "In Green Park",
+        passageId: "festival"
+      },
+      {
+        id: 40,
+        topic: "Scanning – Text 1: City Music Festival",
+        text: "What do the organizers recommend?",
+        options: ["Coming by bus", "Bringing your own food", "Coming by taxi", "Buying tickets only at the park"],
+        correct: "Coming by bus",
+        passageId: "festival"
+      },
+
+      // Texto 2 (41–45)
+      {
+        id: 41,
+        topic: "Scanning – Text 2: Sunrise Language School",
+        text: "On which days are the classes?",
+        options: ["Only on Saturday", "From Monday to Friday", "From Monday to Sunday", "Only on Sunday"],
+        correct: "From Monday to Friday",
+        passageId: "school"
+      },
+      {
+        id: 42,
+        topic: "Scanning – Text 2: Sunrise Language School",
+        text: "What time do the evening classes start?",
+        options: ["6:00 p.m.", "7:30 a.m.", "9:00 a.m.", "7:30 p.m."],
+        correct: "6:00 p.m.",
+        passageId: "school"
+      },
+      {
+        id: 43,
+        topic: "Scanning – Text 2: Sunrise Language School",
+        text: "How long does each course last?",
+        options: ["Four weeks", "Six weeks", "Eight weeks", "Ten weeks"],
+        correct: "Eight weeks",
+        passageId: "school"
+      },
+      {
+        id: 44,
+        topic: "Scanning – Text 2: Sunrise Language School",
+        text: "What do students get at the end of the course if they attend enough classes?",
+        options: ["A job", "A book", "A certificate", "A free trip"],
+        correct: "A certificate",
+        passageId: "school"
+      },
+      {
+        id: 45,
+        topic: "Scanning – Text 2: Sunrise Language School",
+        text: "When can students register at the school office?",
+        options: [
+          "From 8:00 a.m. to 4:00 p.m.",
+          "From 9:00 a.m. to 5:00 p.m.",
+          "From 7:30 a.m. to 9:00 a.m.",
+          "From 6:00 p.m. to 7:30 p.m."
+        ],
+        correct: "From 9:00 a.m. to 5:00 p.m.",
+        passageId: "school"
+      },
+
+      // Texto 3 (46–50)
+      {
+        id: 46,
+        topic: "Scanning – Text 3: Email from a friend",
+        text: "On which day will Emma arrive in Alex’s city?",
+        options: ["Thursday", "Friday", "Saturday", "Sunday"],
+        correct: "Thursday",
+        passageId: "email"
+      },
+      {
+        id: 47,
+        topic: "Scanning – Text 3: Email from a friend",
+        text: "At what time does Emma’s train arrive?",
+        options: ["4:00 p.m.", "5:00 p.m.", "3:15 p.m.", "3:45 p.m."],
+        correct: "3:15 p.m.",
+        passageId: "email"
+      },
+      {
+        id: 48,
+        topic: "Scanning – Text 3: Email from a friend",
+        text: "What is the name of Emma’s hotel?",
+        options: ["River Star Hotel", "Central Star Hotel", "Old Bridge Hotel", "City Center Hotel"],
+        correct: "Central Star Hotel",
+        passageId: "email"
+      },
+      {
+        id: 49,
+        topic: "Scanning – Text 3: Email from a friend",
+        text: "When is Emma free to meet Alex?",
+        options: ["Friday morning", "Thursday afternoon", "Friday afternoon", "Saturday morning"],
+        correct: "Friday afternoon",
+        passageId: "email"
+      },
+      {
+        id: 50,
+        topic: "Scanning – Text 3: Email from a friend",
+        text: "Where does Emma want to meet Alex?",
+        options: ["In the park", "In the café next to his school", "In the hotel lobby", "At the train station"],
+        correct: "In the café next to his school",
+        passageId: "email"
+      }
+    ];
+
+    const TOTAL_PER_ATTEMPT = 15;
+
+    // ---------------------------------------------------------
+    // Estado
+    // ---------------------------------------------------------
+    let activeQuestions = [];
+    let currentIndex = 0;
+    let correctCount = 0;
+    let incorrectCount = 0;
+    let isQuizActive = false;
+
+    // ---------------------------------------------------------
+    // Utilidades
+    // ---------------------------------------------------------
+    function shuffle(array) {
+      const arr = array.slice();
+      for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [arr[i], arr[j]] = [arr[j], arr[i]];
+      }
+      return arr;
+    }
+
+    function formatPassage(text) {
+      const paragraphs = text.split(/\n\s*\n?/);
+      return paragraphs
+        .filter(p => p.trim().length > 0)
+        .map(p => `<p>${p.trim()}</p>`)
+        .join("");
+    }
+
+    // ---------------------------------------------------------
+    // Referencias DOM
+    // ---------------------------------------------------------
+    const startScreen = document.getElementById("start-screen");
+    const quizScreen = document.getElementById("quiz-screen");
+    const resultScreen = document.getElementById("result-screen");
+
+    const startBtn = document.getElementById("start-btn");
+    const nextBtn = document.getElementById("next-btn");
+    const restartBtn = document.getElementById("restart-btn");
+    const retryBtn = document.getElementById("retry-btn");
+
+    const securityMessage = document.getElementById("security-message");
+
+    const progressBar = document.getElementById("progress-bar");
+    const progressLabel = document.getElementById("progress-label");
+    const correctCountSpan = document.getElementById("correct-count");
+    const incorrectCountSpan = document.getElementById("incorrect-count");
+    const questionCounterSpan = document.getElementById("question-counter");
+
+    const questionNumberSpan = document.getElementById("question-number");
+    const questionTopicSpan = document.getElementById("question-topic");
+    const passageDiv = document.getElementById("passage");
+    const questionTextDiv = document.getElementById("question-text");
+    const optionsContainer = document.getElementById("options-container");
+    const feedbackDiv = document.getElementById("feedback");
+
+    const finalScoreSpan = document.getElementById("final-score");
+    const finalTotalSpan = document.getElementById("final-total");
+    const finalCorrectSpan = document.getElementById("final-correct");
+    const finalIncorrectSpan = document.getElementById("final-incorrect");
+
+    // ---------------------------------------------------------
+    // Lógica principal
+    // ---------------------------------------------------------
+    function resetToStart(reason) {
+      isQuizActive = false;
+      activeQuestions = [];
+      currentIndex = 0;
+      correctCount = 0;
+      incorrectCount = 0;
+
+      // Mostrar mensaje de seguridad (si lo hay)
+      if (reason) {
+        securityMessage.textContent =
+          "Evaluación reiniciada por seguridad: " + reason;
+      } else {
+        securityMessage.textContent = "";
+      }
+
+      // Mostrar pantalla de inicio
+      startScreen.classList.remove("hidden");
+      quizScreen.classList.add("hidden");
+      resultScreen.classList.add("hidden");
+
+      // Limpiar estados visuales
+      progressBar.style.width = "0%";
+      progressLabel.textContent = "";
+      correctCountSpan.textContent = "0";
+      incorrectCountSpan.textContent = "0";
+      questionCounterSpan.textContent = "0 / 0";
+      feedbackDiv.textContent = "";
+      feedbackDiv.className = "feedback";
+      optionsContainer.innerHTML = "";
+      passageDiv.classList.add("hidden");
+      passageDiv.innerHTML = "";
+    }
+
+    function startQuiz() {
+      securityMessage.textContent = "";
+      // Seleccionar 15 preguntas aleatorias del banco completo
+      const shuffledBank = shuffle(questionBank);
+      activeQuestions = shuffledBank.slice(0, TOTAL_PER_ATTEMPT);
+
+      // Barajar opciones de cada pregunta
+      activeQuestions.forEach(q => {
+        q.options = shuffle(q.options);
+      });
+
+      currentIndex = 0;
+      correctCount = 0;
+      incorrectCount = 0;
+      isQuizActive = true;
+
+      correctCountSpan.textContent = "0";
+      incorrectCountSpan.textContent = "0";
+      questionCounterSpan.textContent = `0 / ${TOTAL_PER_ATTEMPT}`;
+
+      startScreen.classList.add("hidden");
+      resultScreen.classList.add("hidden");
+      quizScreen.classList.remove("hidden");
+
+      showQuestion();
+    }
+
+    function showQuestion() {
+      nextBtn.disabled = true;
+      feedbackDiv.textContent = "";
+      feedbackDiv.className = "feedback";
+
+      const q = activeQuestions[currentIndex];
+
+      questionNumberSpan.textContent = `Pregunta ${currentIndex + 1}`;
+      questionTopicSpan.textContent = q.topic;
+      questionTextDiv.textContent = q.text;
+
+      if (q.passageId && passages[q.passageId]) {
+        passageDiv.classList.remove("hidden");
+        passageDiv.innerHTML = formatPassage(passages[q.passageId]);
+      } else {
+        passageDiv.classList.add("hidden");
+        passageDiv.innerHTML = "";
+      }
+
+      optionsContainer.innerHTML = "";
+      q.options.forEach(optionText => {
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.className = "option-btn";
+        btn.textContent = optionText;
+        btn.addEventListener("click", () => handleOptionClick(btn, optionText));
+        optionsContainer.appendChild(btn);
+      });
+
+      updateProgressBar();
+      questionCounterSpan.textContent = `${currentIndex + 1} / ${TOTAL_PER_ATTEMPT}`;
+    }
+
+    function handleOptionClick(button, selectedText) {
+      if (!isQuizActive) return;
+
+      const q = activeQuestions[currentIndex];
+      const isCorrect = selectedText === q.correct;
+
+      // Marcar visualmente solo la opción seleccionada
+      const optionButtons = optionsContainer.querySelectorAll(".option-btn");
+      optionButtons.forEach(btn => {
+        btn.disabled = true;
+      });
+
+      button.classList.add("selected");
+      if (isCorrect) {
+        button.classList.add("correct");
+        correctCount++;
+        correctCountSpan.textContent = String(correctCount);
+        feedbackDiv.textContent = "Correct ✅";
+        feedbackDiv.className = "feedback correct";
+      } else {
+        button.classList.add("incorrect");
+        incorrectCount++;
+        incorrectCountSpan.textContent = String(incorrectCount);
+        feedbackDiv.textContent = "Incorrect ❌";
+        feedbackDiv.className = "feedback incorrect";
+      }
+
+      nextBtn.disabled = false;
+      updateProgressBar();
+    }
+
+    function updateProgressBar() {
+      const answered = correctCount + incorrectCount;
+      const total = TOTAL_PER_ATTEMPT;
+      const percent = (answered / total) * 100;
+      progressBar.style.width = percent + "%";
+      progressLabel.textContent = `✔️ ${correctCount} | ❌ ${incorrectCount} | ${answered}/${total}`;
+    }
+
+    function showResults() {
+      isQuizActive = false;
+
+      const total = TOTAL_PER_ATTEMPT;
+      const score = total > 0 ? (correctCount / total) * 5 : 0;
+      const roundedScore = score.toFixed(1);
+
+      finalScoreSpan.textContent = roundedScore;
+      finalTotalSpan.textContent = String(total);
+      finalCorrectSpan.textContent = String(correctCount);
+      finalIncorrectSpan.textContent = String(incorrectCount);
+
+      quizScreen.classList.add("hidden");
+      resultScreen.classList.remove("hidden");
+    }
+
+    // ---------------------------------------------------------
+    // Eventos de seguridad (anti-copia, anti-pestañas, teclas)
+    // ---------------------------------------------------------
+    function setupSecurity() {
+      // Bloquear copiar/pegar/cortar
+      ["copy", "cut", "paste"].forEach(evt => {
+        document.addEventListener(evt, e => {
+          e.preventDefault();
+        });
+      });
+
+      // Bloquear menú contextual (clic derecho)
+      document.addEventListener("contextmenu", e => {
+        e.preventDefault();
+      });
+
+      // Teclas sospechosas
+      document.addEventListener("keydown", e => {
+        const key = e.key;
+        const lower = key.toLowerCase();
+
+        // Combinaciones Ctrl/Cmd + algo
+        if (e.ctrlKey || e.metaKey) {
+          const blocked = ["c", "x", "v", "u", "s", "p"];
+          if (blocked.includes(lower)) {
+            e.preventDefault();
+            return;
+          }
+          // Ctrl+Shift+I/J/C (DevTools)
+          if (e.shiftKey && ["i", "j", "c"].includes(lower)) {
+            e.preventDefault();
+            if (isQuizActive) triggerSecurity("Uso de herramientas de desarrollador.");
+            return;
+          }
+        }
+
+        // F12
+        if (key === "F12") {
+          e.preventDefault();
+          if (isQuizActive) triggerSecurity("Uso de herramientas de desarrollador (F12).");
+          return;
+        }
+
+        // Intento de PrintScreen (no bloquea el pantallazo del sistema, solo detecta la tecla)
+        if (key === "PrintScreen") {
+          e.preventDefault();
+          if (isQuizActive) triggerSecurity("Detección de tecla PrintScreen.");
+          return;
+        }
+      });
+
+      // Cambio de visibilidad (otra pestaña, minimizar, cambiar de ventana)
+      document.addEventListener("visibilitychange", () => {
+        if (document.hidden && isQuizActive) {
+          triggerSecurity("Cambio de pestaña/ventana o minimizar.");
+        }
+      });
+
+      // Pérdida de foco de la ventana
+      window.addEventListener("blur", () => {
+        if (isQuizActive) {
+          triggerSecurity("Pérdida de foco de la ventana de evaluación.");
+        }
+      });
+    }
+
+    function triggerSecurity(reason) {
+      // Reinicia y vuelve a la pantalla de inicio
+      resetToStart(reason);
+    }
+
+    // ---------------------------------------------------------
+    // Listeners de botones
+    // ---------------------------------------------------------
+    startBtn.addEventListener("click", () => {
+      startQuiz();
+    });
+
+    nextBtn.addEventListener("click", () => {
+      const total = TOTAL_PER_ATTEMPT;
+      const answered = correctCount + incorrectCount;
+
+      if (answered >= total) {
+        showResults();
+      } else {
+        currentIndex++;
+        if (currentIndex >= total) {
+          showResults();
+        } else {
+          showQuestion();
+        }
+      }
+    });
+
+    restartBtn.addEventListener("click", () => {
+      resetToStart();
+    });
+
+    retryBtn.addEventListener("click", () => {
+      startQuiz();
+    });
+
+    // ---------------------------------------------------------
+    // Inicialización
+    // ---------------------------------------------------------
+    window.addEventListener("load", () => {
+      setupSecurity();
+      resetToStart();
+    });
+  </script>
+</body>
+</html>
